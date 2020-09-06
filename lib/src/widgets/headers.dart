@@ -193,3 +193,83 @@ class _HeaderCurvoPainter extends CustomPainter {
     return true;
   }
 }
+
+//Header Waves
+
+class HeaderWaves extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      height: double.infinity,
+      width: double.infinity,
+      // color: Color(0Xff615ABB),
+      child: CustomPaint(
+        painter: _HeaderWavesPainter(),
+      ),
+    );
+  }
+}
+
+class _HeaderWavesPainter extends CustomPainter {
+  @override
+  void paint(Canvas canvas, Size size) {
+    final lapiz = Paint();
+    lapiz.color = Color(0Xff615ABB);
+    lapiz.style = PaintingStyle.fill;
+    lapiz.strokeWidth = 20;
+    final path = new Path();
+
+    path.lineTo(0, size.height * 0.20);
+    path.quadraticBezierTo(size.width * 0.25, size.height * 0.25, size.width* 0.5, size.height * 0.20);
+    path.quadraticBezierTo(size.width * 0.8, size.height * 0.15, size.width , size.height * 0.20);
+    path.lineTo(size.width, 0);
+
+
+    canvas.drawPath(path, lapiz);
+  }
+
+  @override
+  bool shouldRepaint(CustomPainter oldDelegate) {
+    return true;
+  }
+}
+
+//Header Waves Invertido
+
+class HeaderWavesInvertido extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      height: double.infinity,
+      width: double.infinity,
+      // color: Color(0Xff615ABB),
+      child: CustomPaint(
+        painter: _HeaderWavesInvertidoPainter(),
+      ),
+    );
+  }
+}
+
+class _HeaderWavesInvertidoPainter extends CustomPainter {
+  @override
+  void paint(Canvas canvas, Size size) {
+    final lapiz = Paint();
+    lapiz.color = Color(0Xff615ABB);
+    lapiz.style = PaintingStyle.fill;
+    lapiz.strokeWidth = 20;
+    final path = new Path();
+
+    path.moveTo(0, size.height);
+    path.lineTo(0, size.height * 0.20);
+    path.quadraticBezierTo(size.width * 0.25, size.height * 0.25, size.width* 0.5, size.height * 0.20);
+    path.quadraticBezierTo(size.width * 0.8, size.height * 0.15, size.width , size.height * 0.20);
+    path.lineTo(size.width, size.height);
+
+    canvas.drawPath(path, lapiz);
+  }
+
+  @override
+  bool shouldRepaint(CustomPainter oldDelegate) {
+    return true;
+  }
+}
