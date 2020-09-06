@@ -27,18 +27,19 @@ class _CuadradoAnimadoState extends State<CuadradoAnimado>
   AnimationController animationController;
 
   Animation<double> rotation;
+  Animation<double> opacity;
 
   @override
   void initState() {
     animationController = new AnimationController(
         vsync: this, duration: Duration(milliseconds: 4000));
     rotation = Tween(begin: 0.0, end: 2 * Math.pi).animate(
-      CurvedAnimation(parent: animationController, curve: Curves.elasticOut)
-    );
+        CurvedAnimation(parent: animationController, curve: Curves.easeOut));
+    opacity = Tween(begin: 0.1, end: 1.0).animate(animationController);
 
     animationController.addListener(() {
       print('Status: ${animationController.status}');
-      if(animationController.status == AnimationStatus.completed) {
+      if (animationController.status == AnimationStatus.completed) {
         // animationController.reverse();
         animationController.reset();
       }
@@ -60,9 +61,14 @@ class _CuadradoAnimadoState extends State<CuadradoAnimado>
 
     return AnimatedBuilder(
         animation: animationController,
-        // child: _Rectangle(),
+        child: _Rectangle(),
         builder: (BuildContext context, Widget child) {
-          return Transform.rotate(angle: rotation.value, child: _Rectangle());
+          return Transform.rotate(
+              angle: rotation.value,
+              child: Opacity(
+                opacity: opacity.value,
+                child: child,
+              ));
         });
   }
 }
@@ -74,7 +80,9 @@ class _Rectangle extends StatelessWidget {
       width: 70,
       height: 70,
       decoration: BoxDecoration(color: Colors.blue),
-      child: ListView(children: [],),
+      child: ListView(
+        children: [],
+      ),
     );
   }
 }
