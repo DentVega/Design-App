@@ -145,7 +145,6 @@ class _HeaderPicoPainter extends CustomPainter {
     path.lineTo(size.width, size.height * 0.20);
     path.lineTo(size.width, 0);
 
-
     canvas.drawPath(path, lapiz);
   }
 
@@ -181,9 +180,9 @@ class _HeaderCurvoPainter extends CustomPainter {
     final path = new Path();
 
     path.lineTo(0, size.height * 0.20);
-    path.quadraticBezierTo(size.width * 0.5, size.height * 0.4, size.width, size.height * 0.20);
+    path.quadraticBezierTo(
+        size.width * 0.5, size.height * 0.4, size.width, size.height * 0.20);
     path.lineTo(size.width, 0);
-
 
     canvas.drawPath(path, lapiz);
   }
@@ -220,10 +219,11 @@ class _HeaderWavesPainter extends CustomPainter {
     final path = new Path();
 
     path.lineTo(0, size.height * 0.20);
-    path.quadraticBezierTo(size.width * 0.25, size.height * 0.25, size.width* 0.5, size.height * 0.20);
-    path.quadraticBezierTo(size.width * 0.8, size.height * 0.15, size.width , size.height * 0.20);
+    path.quadraticBezierTo(size.width * 0.25, size.height * 0.25,
+        size.width * 0.5, size.height * 0.20);
+    path.quadraticBezierTo(
+        size.width * 0.8, size.height * 0.15, size.width, size.height * 0.20);
     path.lineTo(size.width, 0);
-
 
     canvas.drawPath(path, lapiz);
   }
@@ -261,9 +261,67 @@ class _HeaderWavesInvertidoPainter extends CustomPainter {
 
     path.moveTo(0, size.height);
     path.lineTo(0, size.height * 0.20);
-    path.quadraticBezierTo(size.width * 0.25, size.height * 0.25, size.width* 0.5, size.height * 0.20);
-    path.quadraticBezierTo(size.width * 0.8, size.height * 0.15, size.width , size.height * 0.20);
+    path.quadraticBezierTo(size.width * 0.25, size.height * 0.25,
+        size.width * 0.5, size.height * 0.20);
+    path.quadraticBezierTo(
+        size.width * 0.8, size.height * 0.15, size.width, size.height * 0.20);
     path.lineTo(size.width, size.height);
+
+    canvas.drawPath(path, lapiz);
+  }
+
+  @override
+  bool shouldRepaint(CustomPainter oldDelegate) {
+    return true;
+  }
+}
+
+//HeaderGradient
+
+class HeaderGradient extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      height: double.infinity,
+      width: double.infinity,
+      // color: Color(0Xff615ABB),
+      child: CustomPaint(
+        painter: _HeaderGradientPainter(),
+      ),
+    );
+  }
+}
+
+class _HeaderGradientPainter extends CustomPainter {
+  @override
+  void paint(Canvas canvas, Size size) {
+    final Rect rect = Rect.fromCircle(center: Offset(0.0, 55.0), radius: 180);
+
+    final Gradient gradient = new LinearGradient(
+        begin: Alignment.topCenter,
+        end: Alignment.bottomCenter,
+        colors: <Color>[
+          Color(0xff6D05EB),
+          Color(0xffC012FF),
+          Color(0xff6D05FA),
+        ],
+        stops: [
+          0.2,
+          0.5,
+          1.0
+        ]);
+
+    final lapiz = Paint()..shader = gradient.createShader(rect);
+    lapiz.style = PaintingStyle.fill;
+    lapiz.strokeWidth = 20;
+    final path = new Path();
+
+    path.lineTo(0, size.height * 0.20);
+    path.quadraticBezierTo(size.width * 0.25, size.height * 0.25,
+        size.width * 0.5, size.height * 0.20);
+    path.quadraticBezierTo(
+        size.width * 0.8, size.height * 0.15, size.width, size.height * 0.20);
+    path.lineTo(size.width, 0);
 
     canvas.drawPath(path, lapiz);
   }
