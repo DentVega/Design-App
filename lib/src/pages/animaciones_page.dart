@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'dart:math' as Math;
 
+//https://easings.net/en
 class AnimacionesPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -31,12 +32,15 @@ class _CuadradoAnimadoState extends State<CuadradoAnimado>
   void initState() {
     animationController = new AnimationController(
         vsync: this, duration: Duration(milliseconds: 4000));
-    rotation = Tween(begin: 0.0, end: 2 * Math.pi).animate(animationController);
+    rotation = Tween(begin: 0.0, end: 2 * Math.pi).animate(
+      CurvedAnimation(parent: animationController, curve: Curves.elasticOut)
+    );
 
     animationController.addListener(() {
       print('Status: ${animationController.status}');
       if(animationController.status == AnimationStatus.completed) {
-        animationController.reverse();
+        // animationController.reverse();
+        animationController.reset();
       }
     });
 
@@ -70,6 +74,7 @@ class _Rectangle extends StatelessWidget {
       width: 70,
       height: 70,
       decoration: BoxDecoration(color: Colors.blue),
+      child: ListView(children: [],),
     );
   }
 }
