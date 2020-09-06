@@ -23,3 +23,56 @@ class HeaderRedondeados extends StatelessWidget {
     );
   }
 }
+
+class HeaderDiagonalRotate extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Transform.rotate(
+      angle: -0.09,
+      child: Container(
+        height: 300,
+        color: Color(0Xff615ABB),
+      ),
+    );
+  }
+}
+
+class HeaderDiagonal extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      height: double.infinity,
+      width: double.infinity,
+      // color: Color(0Xff615ABB),
+      child: CustomPaint(
+        painter: _HeaderDiagonalPainter(),
+      ),
+    );
+  }
+}
+
+class _HeaderDiagonalPainter extends CustomPainter {
+  @override
+  void paint(Canvas canvas, Size size) {
+    final lapiz = Paint(); //paint
+    // Propiedades
+    lapiz.color = Color(0Xff615ABB);
+    lapiz.style = PaintingStyle.fill; // .fill rellenar // stroke dibujar linea
+    lapiz.strokeWidth = 2; //lapiz carbon o mina, 1 0 2
+
+    final path = new Path();
+    //dibujar con el path y el lapiz
+    path.moveTo(0, size.height * 0.35);
+    path.lineTo(size.width, size.height * 0.30);
+    path.lineTo(size.width, 0);
+    path.lineTo(0, 0);
+    // path.lineTo(0, size.height * 0.5);
+
+    canvas.drawPath(path, lapiz);
+  }
+
+  @override
+  bool shouldRepaint(CustomPainter oldDelegate) {
+    return true;
+  }
+}
