@@ -33,9 +33,12 @@ class _CuadradoAnimadoState extends State<CuadradoAnimado>
   void initState() {
     animationController = new AnimationController(
         vsync: this, duration: Duration(milliseconds: 4000));
+
     rotation = Tween(begin: 0.0, end: 2 * Math.pi).animate(
         CurvedAnimation(parent: animationController, curve: Curves.easeOut));
-    opacity = Tween(begin: 0.1, end: 1.0).animate(animationController);
+
+    opacity = Tween(begin: 0.1, end: 1.0).animate(
+        CurvedAnimation(parent: animationController, curve: Interval(0, 0.25, curve: Curves.easeOut)));
 
     animationController.addListener(() {
       print('Status: ${animationController.status}');
