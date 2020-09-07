@@ -52,7 +52,7 @@ class _CuadradoAnimadoState extends State<CuadradoAnimado>
         curve: Curves.easeOut));
 
     animationController.addListener(() {
-      print('Status: ${animationController.status}');
+      // print('Status: ${animationController.status}');
       if (animationController.status == AnimationStatus.completed) {
         // animationController.reverse();
         animationController.reset();
@@ -77,6 +77,8 @@ class _CuadradoAnimadoState extends State<CuadradoAnimado>
         animation: animationController,
         child: _Rectangle(),
         builder: (BuildContext context, Widget child) {
+          // print('Opacity: ${opacity.value}'); // con value podemos ver cuando llega a su valor final a diferencia con status
+          // print('MoverDerecha: ${rotation.value}');
           return Transform.translate(
             offset: Offset(moverDerecha.value, 0),
             child: Transform.rotate(
