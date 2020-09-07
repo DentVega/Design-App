@@ -29,20 +29,25 @@ class _CuadradoAnimadoState extends State<CuadradoAnimado>
   Animation<double> rotation;
   Animation<double> opacity;
   Animation<double> moverDerecha;
+  Animation<double> agrandar;
 
   @override
   void initState() {
     animationController = new AnimationController(
         vsync: this, duration: Duration(milliseconds: 4000));
 
-    rotation = Tween(begin: 0.0, end: 2 * Math.pi).animate(
+    rotation = Tween(begin: 0.0, end: 2 * Math.pi).animate( //Transform.rotate al widget principal y sus efectos
         CurvedAnimation(parent: animationController, curve: Curves.easeOut));
 
-    opacity = Tween(begin: 0.1, end: 1.0).animate(CurvedAnimation(
+    opacity = Tween(begin: 0.1, end: 1.0).animate(CurvedAnimation(// Opacity() to widget principal
         parent: animationController,
         curve: Interval(0, 0.25, curve: Curves.easeOut)));
 
-    moverDerecha = Tween(begin: 0.0, end: 200.0).animate(CurvedAnimation(
+    moverDerecha = Tween(begin: 0.0, end: 200.0).animate(CurvedAnimation(//Transform.traslate al windget principal y sus animaciones
+        parent: animationController,
+        curve: Curves.easeOut));
+
+    agrandar = Tween(begin: 0.0, end: 2.0).animate(CurvedAnimation(//Transform.scale al widget principal // de cero hasta 2 veces su tamaño
         parent: animationController,
         curve: Curves.easeOut));
 
@@ -78,7 +83,7 @@ class _CuadradoAnimadoState extends State<CuadradoAnimado>
                 angle: rotation.value,
                 child: Opacity(
                   opacity: opacity.value,
-                  child: child,
+                  child: Transform.scale(scale: agrandar.value ,child: child),
                 )),
           );
         });
