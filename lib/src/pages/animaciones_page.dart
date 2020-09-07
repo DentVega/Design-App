@@ -28,6 +28,7 @@ class _CuadradoAnimadoState extends State<CuadradoAnimado>
 
   Animation<double> rotation;
   Animation<double> opacity;
+  Animation<double> opacityOut;
   Animation<double> moverDerecha;
   Animation<double> agrandar;
 
@@ -36,18 +37,27 @@ class _CuadradoAnimadoState extends State<CuadradoAnimado>
     animationController = new AnimationController(
         vsync: this, duration: Duration(milliseconds: 4000));
 
-    rotation = Tween(begin: 0.0, end: 2 * Math.pi).animate( //Transform.rotate al widget principal y sus efectos
+    rotation = Tween(begin: 0.0, end: 2 * Math.pi).animate(
+        //Transform.rotate al widget principal y sus efectos
         CurvedAnimation(parent: animationController, curve: Curves.easeOut));
 
-    opacity = Tween(begin: 0.1, end: 1.0).animate(CurvedAnimation(// Opacity() to widget principal
+    opacity = Tween(begin: 0.1, end: 1.0).animate(CurvedAnimation(
+        // Opacity() to widget principal
         parent: animationController,
-        curve: Interval(0, 0.25, curve: Curves.easeOut)));
+        curve: Interval(0, 0.74, curve: Curves.easeOut)));
 
-    moverDerecha = Tween(begin: 0.0, end: 200.0).animate(CurvedAnimation(//Transform.traslate al windget principal y sus animaciones
+    opacityOut = Tween(begin: 0.0, end: 1.0).animate(CurvedAnimation(
+        // Opacity() to widget principal
+        parent: animationController,
+        curve: Interval(0.75, 1.0, curve: Curves.easeOut)));
+
+    moverDerecha = Tween(begin: 0.0, end: 200.0).animate(CurvedAnimation(
+        //Transform.traslate al windget principal y sus animaciones
         parent: animationController,
         curve: Curves.easeOut));
 
-    agrandar = Tween(begin: 0.0, end: 2.0).animate(CurvedAnimation(//Transform.scale al widget principal // de cero hasta 2 veces su tamaño
+    agrandar = Tween(begin: 0.0, end: 2.0).animate(CurvedAnimation(
+        //Transform.scale al widget principal // de cero hasta 2 veces su tamaño
         parent: animationController,
         curve: Curves.easeOut));
 
@@ -79,13 +89,16 @@ class _CuadradoAnimadoState extends State<CuadradoAnimado>
         builder: (BuildContext context, Widget child) {
           // print('Opacity: ${opacity.value}'); // con value podemos ver cuando llega a su valor final a diferencia con status
           // print('MoverDerecha: ${rotation.value}');
+          print('opacity: ${opacity.value}');
+          print('opacityOut: ${opacityOut.value}');
           return Transform.translate(
             offset: Offset(moverDerecha.value, 0),
             child: Transform.rotate(
                 angle: rotation.value,
                 child: Opacity(
-                  opacity: opacity.value,
-                  child: Transform.scale(scale: agrandar.value ,child: child),
+                  opacity:
+                      opacity.value - opacityOut.value,
+                  child: Transform.scale(scale: agrandar.value, child: child),
                 )),
           );
         });
