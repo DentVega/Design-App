@@ -1,5 +1,6 @@
 // import 'package:design_app/src/pages/animaciones_page.dart';
-import 'package:design_app/src/pages/circular_progress_page.dart';
+// import 'package:design_app/src/labs/circular_progress_page.dart';
+import 'package:design_app/src/pages/graficas_circulares.dart';
 // import 'package:design_app/src/retos/cuadrado_animado_page.dart';
 // import 'package:design_app/src/pages/headers_page.dart';
 import 'package:flutter/material.dart';
@@ -12,7 +13,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Diseños App',
-      home: CircularProgressPage(),
+      home: GraficasCircularesPage(),
     );
   }
 }
