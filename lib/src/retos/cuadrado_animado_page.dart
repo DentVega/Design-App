@@ -33,19 +33,19 @@ class __CuadradoAnimadoState extends State<_CuadradoAnimado>
     animationController = new AnimationController(
         vsync: this, duration: Duration(milliseconds: 4000));
 
-    moverDerecha = Tween(begin: 0.0, end: 150.0).animate(CurvedAnimation(
+    moverDerecha = Tween(begin: 0.0, end: 100.0).animate(CurvedAnimation(
         parent: animationController,
         curve: Interval(0.0, 0.25, curve: Curves.bounceOut)));
 
-    moverArriba = Tween(begin: 0.0, end: -150.0).animate(CurvedAnimation(
+    moverArriba = Tween(begin: 0.0, end: -100.0).animate(CurvedAnimation(
         parent: animationController,
         curve: Interval(0.25, 0.50, curve: Curves.bounceOut)));
 
-    moverIzquierda = Tween(begin: 150.0, end: 0.0).animate(CurvedAnimation(
+    moverIzquierda = Tween(begin: 0.0, end: -100.0).animate(CurvedAnimation(
         parent: animationController,
         curve: Interval(0.50, 0.75, curve: Curves.bounceOut)));
 
-    moverAbajo = Tween(begin: -150.0, end: 0.0).animate(CurvedAnimation(
+    moverAbajo = Tween(begin: 0.0, end: 100.0).animate(CurvedAnimation(
         parent: animationController,
         curve: Interval(0.75, 1.0, curve: Curves.bounceOut)));
 
@@ -68,13 +68,8 @@ class __CuadradoAnimadoState extends State<_CuadradoAnimado>
       builder: (BuildContext context, Widget child) {
         print('${moverIzquierda.value}');
         return Transform.translate(
-          offset: Offset(
-              moverArriba.value != -150
-                  ? moverDerecha.value
-                  : moverIzquierda.value,
-              moverIzquierda.value != 0.0
-                  ? moverArriba.value
-                  : moverAbajo.value),
+          offset: Offset(moverDerecha.value + moverIzquierda.value,
+              moverArriba.value + moverAbajo.value),
           child: child,
         );
       },
