@@ -4,11 +4,22 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class EmergencyPage extends StatelessWidget {
+  //Color(0xff6989F5)
+  //Color(0xff906EF5)
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
-        child: BotonGordo(),
+        child: BotonGordo(
+          texto: 'Motor Accidente',
+          icon: FontAwesomeIcons.carCrash,
+          color1: Color(0xff906EF5),
+          color2: Color(0xff6989F5),
+          onPress: () {
+            print('Click');
+          },
+        ),
       ),
     );
   }
