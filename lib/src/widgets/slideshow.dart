@@ -3,16 +3,20 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 //Todo: Borrar
-import 'package:flutter_svg/svg.dart';
+// import 'package:flutter_svg/svg.dart';
 
 class Slidesshow extends StatelessWidget {
+  List<Widget> slides;
+
+  Slidesshow({@required this.slides});
+
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
       create: (_) => SliderModel(),
       child: Center(
         child: Column(
-          children: [Expanded(child: _Slides()), _Dots()],
+          children: [Expanded(child: _Slides(slides)), _Dots()],
         ),
       ),
     );
@@ -20,6 +24,10 @@ class Slidesshow extends StatelessWidget {
 }
 
 class _Slides extends StatefulWidget {
+  List<Widget> slides;
+
+  _Slides(this.slides);
+
   @override
   __SlidesState createState() => __SlidesState();
 }
@@ -49,11 +57,12 @@ class __SlidesState extends State<_Slides> {
     return Container(
       child: PageView(
         controller: pageViewController,
-        children: [
-          _Slide('assets/svgs/slide-1.svg'),
-          _Slide('assets/svgs/slide-2.svg'),
-          _Slide('assets/svgs/slide-3.svg')
-        ],
+        // children: [
+        //   _Slide('assets/svgs/slide-1.svg'),
+        //   _Slide('assets/svgs/slide-2.svg'),
+        //   _Slide('assets/svgs/slide-3.svg')
+        // ],
+        children: widget.slides.map((child) => _Slide(child)).toList(),
       ),
     );
   }
@@ -97,9 +106,9 @@ class _Dot extends StatelessWidget {
 }
 
 class _Slide extends StatelessWidget {
-  final String svg;
+  final Widget widget;
 
-  const _Slide(this.svg);
+  const _Slide(this.widget);
 
   @override
   Widget build(BuildContext context) {
@@ -107,7 +116,7 @@ class _Slide extends StatelessWidget {
       width: double.infinity,
       height: double.infinity,
       padding: EdgeInsets.all(30),
-      child: SvgPicture.asset(svg),
+      child: widget,
     );
   }
 }
