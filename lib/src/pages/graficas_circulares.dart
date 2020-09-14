@@ -29,15 +29,45 @@ class _GraficasCircularesPageState extends State<GraficasCircularesPage> {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
-              CustomRadialProgress(porcentaje: porcentaje, color: Colors.blue,),
-              CustomRadialProgress(porcentaje: porcentaje, color: Colors.red,)
+              CustomRadialProgress(
+                porcentaje: porcentaje,
+                color: Colors.blue,
+              ),
+              CustomRadialProgress(
+                porcentaje: porcentaje,
+                color: Colors.red,
+                viewText: true,
+              )
             ],
           ),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
-              CustomRadialProgress(porcentaje: porcentaje, color: Colors.pink,),
-              CustomRadialProgress(porcentaje: porcentaje, color: Colors.green,)
+              CustomRadialProgress(
+                porcentaje: porcentaje,
+                color: Colors.pink,
+                viewText: true,
+              ),
+              CustomRadialProgress(
+                porcentaje: porcentaje,
+                color: Colors.green,
+              )
+            ],
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: [
+              CustomRadialProgress(
+                porcentaje: porcentaje,
+                color: Colors.pink,
+                gradient: true,
+              ),
+              CustomRadialProgress(
+                porcentaje: porcentaje,
+                color: Colors.green,
+                gradient: true,
+                viewText: true,
+              )
             ],
           )
         ],
@@ -47,13 +77,16 @@ class _GraficasCircularesPageState extends State<GraficasCircularesPage> {
 }
 
 class CustomRadialProgress extends StatelessWidget {
-  const CustomRadialProgress({
-    @required this.porcentaje,
-    @required this.color
-  });
+  const CustomRadialProgress(
+      {@required this.porcentaje,
+      @required this.color,
+      this.gradient = false,
+      this.viewText = false});
 
   final double porcentaje;
   final Color color;
+  final bool gradient;
+  final bool viewText;
 
   @override
   Widget build(BuildContext context) {
@@ -64,6 +97,8 @@ class CustomRadialProgress extends StatelessWidget {
         colorSecundario: Colors.grey,
         grosorPrimario: 10,
         grosorSecundario: 4,
+        gradient: gradient,
+        viewText: viewText,
       ),
     );
   }

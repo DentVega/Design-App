@@ -8,13 +8,17 @@ class RadialProgress extends StatefulWidget {
   final Color colorSecundario;
   final double grosorPrimario;
   final double grosorSecundario;
+  final bool gradient;
+  final bool viewText;
 
   RadialProgress(
       {@required this.porcentaje,
       this.colorPrimario = Colors.blue,
       this.colorSecundario = Colors.grey,
       this.grosorPrimario = 10,
-      this.grosorSecundario = 4});
+      this.grosorSecundario = 4,
+      this.gradient = false,
+      this.viewText = false});
 
   @override
   _RadialProgressState createState() => _RadialProgressState();
@@ -47,24 +51,41 @@ class _RadialProgressState extends State<RadialProgress>
     final diferenciaAnimar = widget.porcentaje - porcentajeAnterior;
     porcentajeAnterior = widget.porcentaje;
 
-    return AnimatedBuilder(
-        animation: animationController,
-        builder: (BuildContext context, Widget child) {
-          return Container(
-            padding: EdgeInsets.all(10),
-            width: 170,
-            height: 170,
-            child: CustomPaint(
-              painter: _MiRadialProgress(
-                  (widget.porcentaje - diferenciaAnimar) +
-                      (diferenciaAnimar * animationController.value),
-                  widget.colorPrimario,
-                  widget.colorSecundario,
-                  widget.grosorPrimario,
-                  widget.grosorSecundario),
-            ),
-          );
-        });
+    return Stack(
+      children: [
+        widget.viewText
+            ? Container(
+                width: 170,
+                height: 170,
+                child: Center(
+                  child: Text(
+                    '${widget.porcentaje} %',
+                    style: TextStyle(fontWeight: FontWeight.bold),
+                  ),
+                ),
+              )
+            : Container(),
+        AnimatedBuilder(
+            animation: animationController,
+            builder: (BuildContext context, Widget child) {
+              return Container(
+                padding: EdgeInsets.all(10),
+                width: 170,
+                height: 170,
+                child: CustomPaint(
+                  painter: _MiRadialProgress(
+                      (widget.porcentaje - diferenciaAnimar) +
+                          (diferenciaAnimar * animationController.value),
+                      widget.colorPrimario,
+                      widget.colorSecundario,
+                      widget.grosorPrimario,
+                      widget.grosorSecundario,
+                      gradient: widget.gradient),
+                ),
+              );
+            }),
+      ],
+    );
   }
 }
 
@@ -74,23 +95,18 @@ class _MiRadialProgress extends CustomPainter {
   final Color colorSecundario;
   final double grosorPrimario;
   final double grosorSecundario;
+  final bool gradient;
 
   _MiRadialProgress(this.porcentaje, this.colorPrimario, this.colorSecundario,
-      this.grosorPrimario, this.grosorSecundario);
+      this.grosorPrimario, this.grosorSecundario,
+      {this.gradient = false});
 
   @override
   void paint(Canvas canvas, Size size) {
+    final Gradient gradiente = new LinearGradient(
+        colors: <Color>[Color(0xffC012FF), Color(0xff6D05E8), Colors.red]);
 
-    final Gradient gradiente = new LinearGradient(colors: <Color>[
-      Color(0xffC012FF),
-      Color(0xff6D05E8),
-      Colors.red
-    ]);
-
-    final Rect rect = Rect.fromCircle(
-      center: Offset(0, 0),
-      radius: 180
-    );
+    final Rect rect = Rect.fromCircle(center: Offset(0, 0), radius: 180);
 
     final paint = new Paint()
       ..strokeWidth = grosorSecundario
@@ -105,10 +121,14 @@ class _MiRadialProgress extends CustomPainter {
     //Arco
     final paintArco = new Paint()
       ..strokeWidth = grosorPrimario
-      // ..color = colorPrimario
-      ..shader = gradiente.createShader(rect)
       ..strokeCap = StrokeCap.round
       ..style = PaintingStyle.stroke;
+
+    if (gradient) {
+      paintArco.shader = gradiente.createShader(rect);
+    } else {
+      paintArco.color = colorPrimario;
+    }
 
     //Parte que se debera ir llenando
     double arcAngulo = 2 * pi * (porcentaje / 100);
