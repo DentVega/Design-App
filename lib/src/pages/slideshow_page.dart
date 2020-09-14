@@ -7,6 +7,7 @@ class SlideshowPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.black,
       body: Slidesshow(
         puntosArriba: false,
         colorPrimario: Colors.red,
