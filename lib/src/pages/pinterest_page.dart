@@ -3,11 +3,32 @@ import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 
 class PinterestPage extends StatelessWidget {
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: PinterestMenu(),
+      // body: PinterestMenu(),
+      body: Stack(
+        children: [
+          PinterestGrid(),
+          _PinterestMenuLocation(),
+        ],
+      ),
     );
+  }
+}
+
+class _PinterestMenuLocation extends StatelessWidget {
+
+  @override
+  Widget build(BuildContext context) {
+    final widthPantalla = MediaQuery.of(context).size.width;
+    return Positioned(bottom: 30, child: Container(
+      width: widthPantalla,
+      child: Align(
+        child: PinterestMenu(),
+      ),
+    ));
   }
 }
 
@@ -38,11 +59,10 @@ class _PinterestItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.all(5),
-      decoration: BoxDecoration(
-        color: Colors.blue,
-        borderRadius: BorderRadius.all(Radius.circular(30))
-      ),
+        margin: EdgeInsets.all(5),
+        decoration: BoxDecoration(
+            color: Colors.blue,
+            borderRadius: BorderRadius.all(Radius.circular(30))),
         child: new Center(
           child: new CircleAvatar(
             backgroundColor: Colors.white,
