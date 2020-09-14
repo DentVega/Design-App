@@ -2,7 +2,8 @@
 // import 'package:design_app/src/labs/circular_progress_page.dart';
 // import 'package:design_app/src/pages/graficas_circulares.dart';
 // import 'package:design_app/src/labs/slideshow_page.dart';
-import 'package:design_app/src/pages/pinterest_page.dart';
+import 'package:design_app/src/pages/emergency_page.dart';
+// import 'package:design_app/src/pages/pinterest_page.dart';
 // import 'package:design_app/src/pages/slideshow_page.dart';
 // import 'package:design_app/src/retos/cuadrado_animado_page.dart';
 // import 'package:design_app/src/pages/headers_page.dart';
@@ -16,7 +17,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Diseños App',
-      home: PinterestPage(),
+      home: EmergencyPage(),
     );
   }
 }
