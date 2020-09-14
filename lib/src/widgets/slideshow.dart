@@ -198,27 +198,23 @@ class _SlidesshowModal with ChangeNotifier {
 
   set colorPrimario(Color color) {
     this._colorPrimario = color;
-    notifyListeners();
   }
 
   Color get colorSecuandario => this._colorSecuandario;
 
   set colorSecuandario(Color color) {
     this._colorSecuandario = color;
-    notifyListeners();
   }
 
   double get bulletPrimario => this._bulletPrimario;
 
   set bulletPrimario(double bulletPrimario) {
     this._bulletPrimario = bulletPrimario;
-    notifyListeners();
   }
 
   double get bulletSecundario => this._bulletSecundario;
 
   set bulletSecundario(double bulletSecundario) {
     this._bulletSecundario = bulletSecundario;
-    notifyListeners();
   }
 }
