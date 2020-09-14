@@ -1,17 +1,21 @@
 import 'package:design_app/src/widgets/pinterest_menu.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
+import 'package:provider/provider.dart';
 
 class PinterestPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Stack(
-        children: [
-          PinterestGrid(),
-          _PinterestMenuLocation(),
-        ],
+    return ChangeNotifierProvider(
+      create: (_) => _MenuModel(),
+      child: Scaffold(
+        body: Stack(
+          children: [
+            PinterestGrid(),
+            _PinterestMenuLocation(),
+          ],
+        ),
       ),
     );
   }
@@ -21,11 +25,17 @@ class _PinterestMenuLocation extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final widthPantalla = MediaQuery.of(context).size.width;
+    final widthPantalla = MediaQuery
+        .of(context)
+        .size
+        .width;
+
+    final mostrar = Provider.of<_MenuModel>(context).mostrar;
+
     return Positioned(bottom: 30, child: Container(
       width: widthPantalla,
       child: Align(
-        child: PinterestMenu(),
+        child: PinterestMenu(mostrar: mostrar,),
       ),
     ));
   }
@@ -43,13 +53,12 @@ class _PinterestGridState extends State<PinterestGrid> {
 
   @override
   void initState() {
-
     controller.addListener(() {
       print('Listener Scroll: ${controller.offset}');
-      if(controller.offset > scrollAnterior) {
-        print('Ocultar Menu');
+      if (controller.offset > scrollAnterior) {
+        Provider.of<_MenuModel>(context, listen: false).mostrar = false;
       } else {
-        print('Mostart Menu');
+        Provider.of<_MenuModel>(context, listen: false).mostrar = true;
       }
 
       scrollAnterior = controller.offset;
@@ -69,11 +78,12 @@ class _PinterestGridState extends State<PinterestGrid> {
       controller: controller,
       crossAxisCount: 4,
       itemCount: items.length,
-      itemBuilder: (BuildContext context, int index) => _PinterestItem(
-        index: index,
-      ),
+      itemBuilder: (BuildContext context, int index) =>
+          _PinterestItem(
+            index: index,
+          ),
       staggeredTileBuilder: (int index) =>
-          new StaggeredTile.count(2, index.isEven ? 2 : 3),
+      new StaggeredTile.count(2, index.isEven ? 2 : 3),
       mainAxisSpacing: 4.0,
       crossAxisSpacing: 4.0,
     );
@@ -99,4 +109,16 @@ class _PinterestItem extends StatelessWidget {
           ),
         ));
   }
+}
+
+class _MenuModel with ChangeNotifier {
+  bool _mostrar = true;
+
+  bool get mostrar => this._mostrar;
+
+  set mostrar(bool valor) {
+    this._mostrar = valor;
+    notifyListeners();
+  }
+
 }
