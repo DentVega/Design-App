@@ -7,16 +7,31 @@ import 'package:provider/provider.dart';
 
 class Slidesshow extends StatelessWidget {
   List<Widget> slides;
+  final bool puntosArriba;
+  final Color colorPrimario;
+  final Color colorSecundario;
 
-  Slidesshow({@required this.slides});
+  Slidesshow(
+      {@required this.slides,
+      this.puntosArriba = false,
+      this.colorPrimario = Colors.blue,
+      this.colorSecundario = Colors.grey});
 
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
       create: (_) => SliderModel(),
-      child: Center(
-        child: Column(
-          children: [Expanded(child: _Slides(slides)), _Dots(slides.length)],
+      child: SafeArea(
+        child: Center(
+          child: Column(
+            children: [
+              if (this.puntosArriba)
+                _Dots(slides.length, colorPrimario, colorSecundario),
+              Expanded(child: _Slides(slides)),
+              if (!this.puntosArriba)
+                _Dots(slides.length, colorPrimario, colorSecundario),
+            ],
+          ),
         ),
       ),
     );
@@ -70,8 +85,10 @@ class __SlidesState extends State<_Slides> {
 
 class _Dots extends StatelessWidget {
   int totalSlides;
+  final Color colorPrimario;
+  final Color colorSecundario;
 
-  _Dots(this.totalSlides);
+  _Dots(this.totalSlides, this.colorPrimario, this.colorSecundario);
 
   @override
   Widget build(BuildContext context) {
@@ -81,7 +98,7 @@ class _Dots extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         // children: slides.asMap().entries.map((child) => _Dot(child.key)).toList(),
-        children: List.generate(totalSlides, (index) => _Dot(index)),
+        children: List.generate(totalSlides, (index) => _Dot(index, colorPrimario, colorSecundario)),
       ),
     );
   }
@@ -89,8 +106,10 @@ class _Dots extends StatelessWidget {
 
 class _Dot extends StatelessWidget {
   final int index;
+  final Color colorPrimario;
+  final Color colorSecundario;
 
-  _Dot(this.index);
+  _Dot(this.index, this.colorPrimario, this.colorSecundario);
 
   @override
   Widget build(BuildContext context) {
@@ -103,8 +122,8 @@ class _Dot extends StatelessWidget {
       height: 12,
       decoration: BoxDecoration(
           color: (pageViewIndex >= index - 0.5 && pageViewIndex < index + 0.5)
-              ? Colors.blue
-              : Colors.grey,
+              ? colorPrimario
+              : colorSecundario,
           shape: BoxShape.circle),
     );
   }
