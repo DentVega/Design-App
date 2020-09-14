@@ -52,8 +52,8 @@ class _RadialProgressState extends State<RadialProgress>
         builder: (BuildContext context, Widget child) {
           return Container(
             padding: EdgeInsets.all(10),
-            width: double.infinity,
-            height: double.infinity,
+            width: 170,
+            height: 170,
             child: CustomPaint(
               painter: _MiRadialProgress(
                   (widget.porcentaje - diferenciaAnimar) +
