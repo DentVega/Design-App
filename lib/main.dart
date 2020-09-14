@@ -8,7 +8,7 @@ import 'package:design_app/src/pages/emergency_page.dart';
 // import 'package:design_app/src/retos/cuadrado_animado_page.dart';
 // import 'package:design_app/src/pages/headers_page.dart';
 import 'package:flutter/material.dart';
-
+//flutter run -d all
 void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
