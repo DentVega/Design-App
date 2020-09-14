@@ -1,4 +1,3 @@
-// import 'package:design_app/src/labs/slideshow_page.dart';
 import 'package:design_app/src/widgets/slideshow.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -11,6 +10,8 @@ class SlideshowPage extends StatelessWidget {
       body: Slidesshow(
         puntosArriba: false,
         colorPrimario: Colors.red,
+        bulletPrimario: 15,
+        bulletSecundario: 10,
         slides: [
           SvgPicture.asset('assets/svgs/slide-1.svg'),
           SvgPicture.asset('assets/svgs/slide-2.svg'),

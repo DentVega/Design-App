@@ -9,12 +9,16 @@ class Slidesshow extends StatelessWidget {
   final bool puntosArriba;
   final Color colorPrimario;
   final Color colorSecundario;
+  final double bulletPrimario;
+  final double bulletSecundario;
 
   Slidesshow(
       {@required this.slides,
       this.puntosArriba = false,
       this.colorPrimario = Colors.blue,
-      this.colorSecundario = Colors.grey});
+      this.colorSecundario = Colors.grey,
+      this.bulletPrimario = 12.0,
+      this.bulletSecundario = 12.0});
 
   @override
   Widget build(BuildContext context) {
@@ -24,8 +28,14 @@ class Slidesshow extends StatelessWidget {
         child: Center(
           child: Builder(
             builder: (BuildContext context) {
-              Provider.of<_SlidesshowModal>(context).colorPrimario = this.colorPrimario;
-              Provider.of<_SlidesshowModal>(context).colorSecuandario = this.colorSecundario;
+              Provider.of<_SlidesshowModal>(context).colorPrimario =
+                  this.colorPrimario;
+              Provider.of<_SlidesshowModal>(context).colorSecuandario =
+                  this.colorSecundario;
+              Provider.of<_SlidesshowModal>(context).bulletPrimario =
+                  this.bulletPrimario;
+              Provider.of<_SlidesshowModal>(context).bulletSecundario =
+                  this.bulletSecundario;
 
               return _CrearEstructuraSlideshow(
                   puntosArriba: puntosArriba, slides: slides);
@@ -132,14 +142,20 @@ class _Dot extends StatelessWidget {
   Widget build(BuildContext context) {
     final pageViewIndex = Provider.of<_SlidesshowModal>(context);
 
+    bool activated = (pageViewIndex.currentPage >= index - 0.5 &&
+        pageViewIndex.currentPage < index + 0.5);
+
+    final tamano = activated
+        ? pageViewIndex.bulletPrimario
+        : pageViewIndex.bulletSecundario;
+
     return AnimatedContainer(
       duration: Duration(milliseconds: 200),
       margin: EdgeInsets.symmetric(horizontal: 5),
-      width: 12,
-      height: 12,
+      width: tamano,
+      height: tamano,
       decoration: BoxDecoration(
-          color: (pageViewIndex.currentPage >= index - 0.5 &&
-                  pageViewIndex.currentPage < index + 0.5)
+          color: activated
               ? pageViewIndex.colorPrimario
               : pageViewIndex.colorSecuandario,
           shape: BoxShape.circle),
@@ -167,6 +183,8 @@ class _SlidesshowModal with ChangeNotifier {
   double _currentPage = 0;
   Color _colorPrimario = Colors.blue;
   Color _colorSecuandario = Colors.grey;
+  double _bulletPrimario = 12;
+  double _bulletSecundario = 12;
 
   double get currentPage => this._currentPage;
 
@@ -187,6 +205,20 @@ class _SlidesshowModal with ChangeNotifier {
 
   set colorSecuandario(Color color) {
     this._colorSecuandario = color;
+    notifyListeners();
+  }
+
+  double get bulletPrimario => this._bulletPrimario;
+
+  set bulletPrimario(double bulletPrimario) {
+    this._bulletPrimario = bulletPrimario;
+    notifyListeners();
+  }
+
+  double get bulletSecundario => this._bulletSecundario;
+
+  set bulletSecundario(double bulletSecundario) {
+    this._bulletSecundario = bulletSecundario;
     notifyListeners();
   }
 }
