@@ -32,9 +32,8 @@ class __SlidesState extends State<_Slides> {
     pageViewController.addListener(() {
       // print('Pagina actual: ${pageViewController.page}');
       //Actualizar el provider, sliderModel
-      Provider
-          .of<SliderModel>(context, listen: false)
-          .currentPage = pageViewController.page;
+      Provider.of<SliderModel>(context, listen: false).currentPage =
+          pageViewController.page;
     });
     super.initState();
   }
@@ -81,16 +80,17 @@ class _Dot extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final pageViewIndex = Provider
-        .of<SliderModel>(context)
-        .currentPage;
+    final pageViewIndex = Provider.of<SliderModel>(context).currentPage;
 
-    return Container(
+    return AnimatedContainer(
+      duration: Duration(milliseconds: 200),
       margin: EdgeInsets.symmetric(horizontal: 5),
       width: 12,
       height: 12,
       decoration: BoxDecoration(
-          color: (pageViewIndex == index) ? Colors.blue : Colors.grey,
+          color: (pageViewIndex >= index - 0.5 && pageViewIndex < index + 0.5)
+              ? Colors.blue
+              : Colors.grey,
           shape: BoxShape.circle),
     );
   }
